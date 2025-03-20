@@ -14,10 +14,8 @@ from collections import Counter
 
 # Define paths and parameters
 path = r"C:\Users\Jacob Olinger\.cache\kagglehub\datasets\lyensoetanto\vehicle-images-dataset\versions\1"
-# Download latest version
 # path = kagglehub.dataset_download("lyensoetanto/vehicle-images-dataset")
 
-# print("Path to dataset files:", path)
 target_size = (224, 224)
 batch_size = 32
 num_epochs = 25
@@ -140,9 +138,9 @@ for epoch in range(num_epochs):
         total += targets.size(0)
 
     train_acc = 100 * correct / total
-    train_accuracies.append(train_acc)  # Store accuracy for plotting
+    train_accuracies.append(train_acc)
     print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {total_loss:.4f}, Accuracy: {train_acc:.2f}%")
-    scheduler.step()  # Adjust learning rate
+    scheduler.step()
 
 # Save the model
 model_path = "vehicle_classification_model.pth"
@@ -179,7 +177,16 @@ def evaluate_model(loader, dataset_type):
     print(f"{dataset_type} confusion matrix saved as {cm_filename}")
     plt.close()
 
+# Load model
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# num_classes = 7
+# model = VehicleNet(num_classes).to(device)
+
+# Load saved weights
+# model.load_state_dict(torch.load("vehicle_classification_model.pth", map_location=device))
+# model.eval()
 # Evaluate on Training and Validation Data
+
 evaluate_model(train_loader, "Train")
 evaluate_model(val_loader, "Validation")
 
